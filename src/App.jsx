@@ -11,15 +11,15 @@ class App extends Component {
         projects:[
             {
                 id: 1,
-                projectname: 'Pluto app',
+                projectName: 'Pluto app',
                 type: 'UX/UI',
             },{
                 id: 2,
-                projectname: 'Shoes website',
+                projectName: 'Shoes website',
                 type: 'UI',
             },{
                 id: 3,
-                projectname: 'Oil Paints',
+                projectName: 'Oil Paints',
                 type: 'Branding & package design',
             }
         ]
@@ -41,6 +41,31 @@ class App extends Component {
           projects: projects
       });
   }
+
+  removeProject = (id) => {
+      var projects = this.state.projects;
+      var filtered = projects.filter((project) => {
+        return project.id !== id;
+      });
+
+      this.setState({
+        projects: filtered
+      });
+
+  }
+
+  updateProject = (id,data) => {
+      var projects = this.state.projects;
+      var index = projects.findIndex(function(project){
+          return project.id == id;
+      });
+
+      var updatedProject = {...projects[index],...data};
+      projects[index] = updatedProject;
+
+      this.setState({projects:projects});
+  }
+
  render(){
   return (
     <div className="App">
@@ -54,7 +79,8 @@ class App extends Component {
                     var projectProps = {
                         ...project,
                         key: project.id,
-
+                        removeProject: this.removeProject,
+                        updateProject: this.updateProject,
                     };
                     console.log(project)
                     return(
